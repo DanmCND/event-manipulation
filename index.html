@@ -1,98 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Contador di letra
-    </title>
+    <title>Contador de Letra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+        :root {
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --border: #2a2a2a;
+            --accent: #e8ff47;
+            --accent-dim: #c8df20;
+            --text: #f0f0f0;
+            --muted: #555;
+        }
+
+        * {
             margin: 0;
-            padding: 20px;
-            text-align: center;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-weight: 600;
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(232, 255, 71, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(232, 255, 71, 0.03) 0%, transparent 50%);
         }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        input#ipt {
+
+        .card {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border: 2px solid #3498db;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            max-width: 480px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 3rem 2.5rem;
+            position: relative;
+            overflow: hidden;
         }
-        input#ipt:focus {
-            border-color: #2980b9;
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: -60px;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        #ipt {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            padding: 1rem 1.2rem;
             outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            caret-color: var(--accent);
         }
-        button#btnLimpar {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            font-size: 16px;
+
+        #ipt::placeholder {
+            color: var(--muted);
+        }
+
+        #ipt:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(232, 255, 71, 0.08);
+        }
+
+        #btnLimpar {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.75rem;
             cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
+            transition: all 0.2s;
+            margin-bottom: 2rem;
         }
-        button#btnLimpar:hover {
-            background-color: #2c80b9;
+
+        #btnLimpar:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(232, 255, 71, 0.04);
         }
+
+        #btnLimpar:active {
+            transform: scale(0.98);
+        }
+
+        .result-area {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
         #result {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #27ae60;
-            margin-top: 20px;
-            min-height: 25px;
+            font-family: 'Syne', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.04em;
+            transition: transform 0.1s;
+        }
+
+        #result.bump {
+            transform: scale(1.12);
         }
     </style>
 </head>
-<body>   
-    <div class="container">
-        <h1> Contador de caracteres!! </h1>
-        
-        <input id="ipt" placeholder="Digite o texto"> 
+<body>
+    <div class="card">
+        <h1>Contador de <span>caracteres</span></h1>
+        <p class="subtitle">digite e veja em tempo real</p>
 
-        <button id="btnLimpar"> Limpar </button>
+        <div class="input-wrapper">
+            <input id="ipt" placeholder="Digite o texto aqui...">
+        </div>
 
-        <div id="result"> Total: 0 </div>
+        <button id="btnLimpar">Limpar</button>
+
+        <div class="result-area">
+            <span class="result-label">Total</span>
+            <div id="result">0</div>
+        </div>
     </div>
 
-<script>
+    <script>
+        const inputTexto = document.getElementById("ipt")
+        const buttonLimpar = document.getElementById("btnLimpar")
+        const resultado = document.getElementById("result")
 
-    const inputTexto = document.getElementById("ipt")
-    const buttonLimpar = document.getElementById("btnLimpar")
-    const resultado = document.getElementById("result")
+        function limparCampo(){
+            inputTexto.value = ""
+            contadorCaracteres()
+        }
 
-    function limparCampo(){
-        inputTexto.value = ""
-        contadorCaracteres()
-    }
-    function contadorCaracteres(){
-        resultado.textContent = "Total:" + inputTexto.value.length  
-    }
+        function contadorCaracteres(){
+            resultado.textContent = inputTexto.value.length
+            resultado.classList.remove("bump")
+            void resultado.offsetWidth
+            resultado.classList.add("bump")
+        }
 
-
-    inputTexto.addEventListener("input", contadorCaracteres)
-    buttonLimpar.addEventListener("click", limparCampo)
-
-</script>
+        inputTexto.addEventListener("input", contadorCaracteres)
+        buttonLimpar.addEventListener("click", limparCampo)
+    </script>
 </body>
 </html>
