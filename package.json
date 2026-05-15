@@ -1,0 +1,14 @@
+{
+  "name": "manipulacao",
+  "version": "1.0.0",
+  "description": "manipulação de eventos",
+  "main": "main.js",
+  "scripts": {
+    "start":"electron ."
+  },
+  "author": "danm",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^41.6.1"
+  }
+}
